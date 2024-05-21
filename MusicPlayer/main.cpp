@@ -9,10 +9,11 @@ int main(int argc, char** argv) {
     SDL_Event event;
     
     bool isRunning = true;
+    bool playing = false;
     int result = 0;
     int flags = MIX_INIT_MP3;
 
-    if (SDL_Init(SDL_INIT_AUDIO /*| SDL_INIT_VIDEO ^ */ ) < 0) {
+    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO  ) < 0) {
         printf("Failed to init SDL\n");
         exit(1);
     }
@@ -27,7 +28,8 @@ int main(int argc, char** argv) {
 
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
     Mix_Music* music = Mix_LoadMUS(MY_COOL_MP3);
-    //Mix_PlayMusic(music, 1);
+    if (Mix_PlayMusic(music, 1))
+        playing = true;
                    
     SDL_CreateWindowAndRenderer(1280, 720, 0, &window, &renderer);
     while (1) {
@@ -35,16 +37,24 @@ int main(int argc, char** argv) {
 
             while (SDL_PollEvent(&event)) {
 
-                if (event.type == SDL_KEYDOWN)
-                    std::cout << "Key press\n";
-
+                
                 switch (event.type) {
                 case SDL_KEYDOWN:
                     std::cout << "Key press detected amk \n";
+                    if (playing) {
+                        Mix_PauseMusic();
+                        playing = false;
+                    }
+                    else {
+                        Mix_ResumeMusic();
+                        playing = true;
+                    }
+                        
                     break;
 
                 case SDL_KEYUP:
                     std::cout << "Key press not detected \n";
+                    
 
                     break;
 
