@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\merta\\source\\repos\\MusicPlayer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\file.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|solutionrelative:MusicPlayer\\file.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|solutionrelative:MusicPlayer\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\file.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C7B4473-F48A-442C-B407-B5645778807D}|MusicPlayer\\MusicPlayer.vcxproj|solutionrelative:MusicPlayer\\file.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "file.cpp",
               "DocumentMoniker": "C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\file.cpp",
               "RelativeDocumentMoniker": "MusicPlayer\\file.cpp",
@@ -35,13 +35,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\main.cpp",
               "RelativeDocumentMoniker": "MusicPlayer\\main.cpp",
               "ToolTip": "C:\\Users\\merta\\source\\repos\\MusicPlayer\\MusicPlayer\\main.cpp",
               "RelativeToolTip": "MusicPlayer\\main.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-20T17:12:24.003Z",
               "EditorCaption": ""
