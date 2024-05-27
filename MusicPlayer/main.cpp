@@ -4,31 +4,61 @@
 #include "SDL_filesystem.h"
 
 #include <iostream>
+#include <queue>
+#include <filesystem>
+#include <vector>
+
 
 #include "imgui.h"
 #include "ImGui/backends/imgui_impl_sdl2.h"
 #include "ImGui/backends/imgui_impl_sdlrenderer2.h"
 #include "ImGui/misc/cpp/imgui_stdlib.h" //std::string users: Add misc/cpp/imgui_stdlib.* to easily use InputText with std::string.
 
-static const char* MY_COOL_MP3 = "Rain.mp3";
+using fsPath = std::filesystem::path;
+void music_finished(void)
+{
+    /*indexSong++;
+    Mix_FreeMusic(music);
+    Mix_LoadMUS(songs[indexSong].c_str());
+    Mix_PlayMusic(music, 1);*/
+        
+}
+// habe n Songs, das nächste soll spielen, wenn das letzte geendet hat.
+
+fsPath musicPath("/music");
+
+static const std::string rain = "music/Rain.mp3";
+static const std::string meer = "music/Meer.mp3";
+Mix_Music* music;
+
+std::vector <std::string> songs;
+unsigned int indexSong = 0;
+
+
 
 constexpr unsigned short WINwidth = 1280, WINheight = 720;
 
 int main(int argc, char** argv) {  
+    //path
+    
+    //SDL
     SDL_Window *window = nullptr;
     SDL_Renderer* renderer = nullptr;
     SDL_Event event;
     SDL_Rect Recti{ WINwidth / 2,WINheight / 2,50,50 };
+    SDL_Rect backWards{ ((WINwidth / 2) - 70) ,WINheight / 2,50,50 };
+    SDL_Rect forWards{ ((WINwidth / 2) + 70) ,WINheight / 2,50,50 };
     char* basePth = SDL_GetBasePath();
-    std::cout << basePth << std::endl;
+    std::cout << basePth << "\n";
+  
+  
     
-    bool isRunning = true;
     bool endIt = false;
     bool playing = false;
+    
     int result = 0;
     int flags = MIX_INIT_MP3;
 
-    
     //SDL Init
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO  ) < 0) {
         printf("Failed to init SDL\n");
@@ -41,22 +71,24 @@ int main(int argc, char** argv) {
     }
 
     //Audio and play
+    songs.push_back(meer);
+    songs.push_back(rain);
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-    Mix_Music* music = Mix_LoadMUS(MY_COOL_MP3);
-        
+    music = Mix_LoadMUS(songs[indexSong].c_str());
     if (Mix_PlayMusic(music, 1))
         playing = true;
+    //Mix_HookMusicFinished(music_finished);
     
     //create Window and Renderer lol
     SDL_CreateWindowAndRenderer(WINwidth, WINheight, 0, &window, &renderer);
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGui_ImplSDLRenderer2_Init(renderer);
+    //IMGUI_CHECKVERSION();
+    //ImGui::CreateContext();
+    //ImGui_ImplSDLRenderer2_Init(renderer);
 
     while (!endIt) {
      
-
+            //poll event
             while (SDL_PollEvent(&event)) {
 
                 switch (event.type) {
@@ -65,23 +97,39 @@ int main(int argc, char** argv) {
                     endIt = true;
                     break;
                 case SDL_KEYDOWN:
-                    std::cout << "Key press detected amk \n";
-                    if (playing) {
-                        Mix_PauseMusic();
-                        playing = false;
+                    if(SDLK_SPACE == event.key.keysym.sym)
+                    {
+                        if (playing) {
+                            Mix_PauseMusic();
+                            playing = false;
+                            std::cout << SDL_GetAudioStatus() <<"\n";
+                            std::cout << (double) Mix_MusicDuration(music) << "\n";
+
+                        }
+                        else {
+                            Mix_ResumeMusic();
+                            playing = true;
+                            std::cout << SDL_GetAudioStatus() << "\n";
+                        }
                     }
-                    else {
-                        Mix_ResumeMusic();
-                        playing = true;
+                    if (SDLK_j == event.key.keysym.sym)
+                    {
+                        Mix_RewindMusic();
                     }
-                    break;
-                case SDL_KEYUP:
-                    std::cout << "Key press not detected \n";
+                    if (SDLK_q == event.key.keysym.sym)
+                    {
+                        endIt = true;
+                    }
                     break;
                 default:
                     break;
                 }
+                
             }
+
+
+
+            //rendering
             SDL_Delay(1000/60); //calculates to 60 fps
             SDL_SetRenderDrawColor(renderer, 69, 10, 69, 255);
             SDL_RenderClear(renderer);
@@ -96,32 +144,26 @@ int main(int argc, char** argv) {
                 SDL_RenderFillRect(renderer, &Recti);
             }
 
-           
-            
+            SDL_SetRenderDrawColor(renderer, 169, 0, 255, 255);
+            SDL_RenderFillRect(renderer, &backWards);
+
+
+            SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+            SDL_RenderFillRect(renderer, &forWards);
+
             SDL_RenderPresent(renderer);
-           
-            
+               
      }
         
 
+    //free everything
+    Mix_FreeMusic(music);
+    Mix_CloseAudio();
+    Mix_Quit();
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
-
-    /*while (!SDL_QuitRequested()) {
-        SDL_Delay(250);
-
-    }*/
-    
-
-
-    Mix_FreeMusic(music);
+    SDL_free(basePth);
     SDL_Quit();
     return 0;
 }
-
-
-
-/*
-    
-*/
