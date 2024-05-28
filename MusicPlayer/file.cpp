@@ -10,3 +10,13 @@
 
 	Audio vi´zualizer -> https://github.com/JanKleprlik/AudioVisualiser
 */
+/*
+	#include "imgui.h"
+#include "ImGui/backends/imgui_impl_sdl2.h"
+#include "ImGui/backends/imgui_impl_sdlrenderer2.h"
+#include "ImGui/misc/cpp/imgui_stdlib.h" //std::string users: Add misc/cpp/imgui_stdlib.* to easily use InputText with std::string.
+
+
+
+
+*/

@@ -7,11 +7,15 @@
 class Player
 {
 private:
-	std::vector<Mix_Music*> songs;
-	Mix_Music* music;
+	 
+	 Mix_Music* music;
 	const std::string musicPath;
 	int result = 0;
 	bool playing;
+	
+public:
+	unsigned int songIndex = 0;
+	std::vector<Mix_Music*> songs;
 
 public:
 	bool initMixer();
@@ -22,5 +26,5 @@ public:
 	Player();
 	~Player();
 
-	static void songFinished();
+	
 };

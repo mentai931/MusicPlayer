@@ -10,6 +10,7 @@ bool Player::initMixer()
 	}
 	//musicPath = "music/";
 	return true;
+	
 }
 
 int Player::loadMusic(const char* filename)
@@ -56,14 +57,11 @@ void Player::togglePlay()
 	
 }
 
-void Player::songFinished()
-{
-	//Mix_FreeMusic(music);
-	//music = NULL;
-}
 
 Player::Player()
 {
+	songIndex = 0;
+	//music = nullptr;
 	Player::initMixer();
 	std::cout << "Constructor\n";
 }

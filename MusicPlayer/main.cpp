@@ -6,11 +6,33 @@
 #include <filesystem>
 #include <vector>
 
+Player player;
 
-#include "imgui.h"
-#include "ImGui/backends/imgui_impl_sdl2.h"
-#include "ImGui/backends/imgui_impl_sdlrenderer2.h"
-#include "ImGui/misc/cpp/imgui_stdlib.h" //std::string users: Add misc/cpp/imgui_stdlib.* to easily use InputText with std::string.
+void songFinished()
+{
+    
+    std::cout << player.songIndex << " before ++\n";
+    Mix_Music* tmp = player.songs[player.songIndex];
+    Mix_FreeMusic(tmp);
+    tmp = NULL;
+    player.songIndex++;
+    std::cout << player.songIndex << " after ++\n";
+    if (player.songIndex < player.songs.size())
+    {
+        if (Mix_PlayingMusic() == 0) 
+        {
+            Mix_PlayMusic(player.songs[player.songIndex], 0); 
+            std::cout << player.songs.size() << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "Keine Songs mehr auf der Liste\n";
+        //TODO Bug behandeln
+    }
+    
+
+}
 
 
 
@@ -37,15 +59,14 @@ int main(int argc, char** argv) {
     }
     
  
-    Player player;
-
+    
     player.loadMusic(meer.c_str());
     player.loadMusic(rain.c_str());
     player.playMusic(0);
-    
+    Mix_HookMusicFinished(songFinished);
     SDL_CreateWindowAndRenderer(WINwidth, WINheight, 0, &window, &renderer); 
 
-    //Mix_HookMusicFinished(music_finished);
+    Mix_HookMusicFinished(songFinished);
    
     while (!endIt) {
      
@@ -58,17 +79,22 @@ int main(int argc, char** argv) {
                     endIt = true;
                     break;
                 case SDL_KEYDOWN:
-                    if(SDLK_SPACE == event.key.keysym.sym)
+                    
+                    if (SDLK_q == event.key.keysym.sym)
                     {
-                        player.togglePlay();
+                        endIt = true;
                     }
                     if (SDLK_j == event.key.keysym.sym)
                     {
                         Mix_RewindMusic();
                     }
-                    if (SDLK_q == event.key.keysym.sym)
+                    if (SDLK_k == event.key.keysym.sym)
                     {
-                        endIt = true;
+                        player.togglePlay();
+                    }
+                    if (SDLK_l == event.key.keysym.sym)
+                    {
+                        Mix_HaltMusic();
                     }
                     break;
                 default:
